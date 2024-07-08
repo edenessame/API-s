@@ -76,10 +76,6 @@ async function postForm(e) {
     }
      */
 
-    for (let entry of form.entries()) {
-        console.log(entry);
-    }
-
     const response = await fetch(API_URL, {
         method: "POST",
         headers: {
