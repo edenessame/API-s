@@ -89,6 +89,7 @@ async function postForm(e) {
     if (response.ok) {
         displayErrors(data);
     } else {
+        displayException(data);
         throw new Error(data.error);
     }
 
@@ -110,7 +111,8 @@ async function getStatus(e) {
     if (response.ok) {
         displayStatus(data); // calls the displayStatus function, passes it the data const and displays it as a modal
     } else {
-        throw new Error(data.error); // if api key wrong or other error, returns error message
+        displayException(data); // call displayexeption function
+        throw new Error(data.error); // if api key wrong or other error, returns error message, all JS execution stops after a "throw" so it must be last
     }
 
 }
@@ -146,6 +148,23 @@ function displayErrors(data) {
     document.getElementById("resultsModalTitle").innerText = heading;
     document.getElementById("results-content").innerHTML = results;
     resultsModal.show(); // shows the modal
+}
+
+/**
+ * 
+ * shows what the error is in a modal
+ */
+function displayException(data) {
+
+    let heading = `An Exception Occurred`;
+
+    results = `<div>The API returned status code ${data.status_code}</div>`;
+    results += `<div>Error number: <strong>${data.error_no}</strong></div>`;
+    results += `<div>Error text: <strong>${data.error}</strong></div>`;
+
+    document.getElementById("resultsModalTitle").innerText = heading;
+    document.getElementById("results-content").innerHTML = results;
+    resultsModal.show();
 }
 
 function displayStatus(data) {
